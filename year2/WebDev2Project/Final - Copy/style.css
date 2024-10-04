@@ -1,0 +1,57 @@
+body {
+    background-image: url("../Background.jpg");
+    background-size: cover;
+    background-color: pink;
+    margin: 0; /* Remove default margin */
+}
+
+nav {
+    position: sticky;
+    top: 0;
+    padding: 5px;
+    background-color: rgb(224, 123, 123);
+}
+
+ul.menu {
+    list-style-type: none;
+    padding: 0;
+    overflow: hidden;
+    display: flex; /* Set display to flex for horizontal layout */
+}
+
+ul.menu li {
+    display: inline;
+    margin-right: 20px; /* Add some spacing between items */
+}
+
+ul.menu li a {
+    display: block;
+    padding: 14px 16px;
+    text-decoration: none;
+    color: white;
+}
+
+ul.menu li a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+div.user {
+    height: 1%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    text-align: center;
+}
+
+div.container {
+    text-align: center;
+    font-size: larger;
+    padding: 10px;
+    display: inline-block;
+    width: 100%;
+}
+
+table{
+    background-color: white;
+}
