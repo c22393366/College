@@ -1,0 +1,38 @@
+What is cloud computing?: 
+- It's a shift in service delivery by replacing local servers with online ones, allowing remote storage, processing power, and APIs
+- It allows for automatic, self service computer resource access
+- standard devices can access over a network
+- resources are pooled
+- Monitored resource usage
+
+Models:
+- IaaS: 
+	- Virtually limitless storage and computing power
+	- Less need for at hand hardware on client side
+	- Provides environments to work in 
+	- Provides tools and services, as well as SDKs
+	- Create and manage virtual OS, though knowledge of the API is normally required
+	- Example: Virtual Machine
+	- Benefits:
+		- scalable
+		- Less upfront and committal cost of hardware 
+	- Challenges: Users have to manage OS, updates, and data security themselves
+- PaaS:
+	- Allows devs to build, run, and manage apps without concern for underlying infrastructure
+	- Handles dev environment setup, server config, and storage
+	- Example: Google App Engine
+	- Benefits:
+		- Speeds up dev thanks to pre-configured environments
+		- Scalable
+		- Promotes collab between distributed dev teams
+	- Challenges: Vendor lock-in potential from reliance on platform-specific APIs
+- SaaS:
+	- No dev or resources needed for user
+	- software in a central location in a one to many relationship
+	- APIs allow for integration between software
+	- Apps delivered over the internet
+	- Example: Google workspaces
+	- Benefits:
+		- Easy access from any internet accessing device
+		- Auto updates and patch management
+		- Users not concerned with infrastructure management or the app itself 
