@@ -1,18 +1,18 @@
-DROP VIEW IF EXISTS stock_moving_average;
+drop view if exists stock_moving_average;
 
-CREATE VIEW stock_moving_average AS
-SELECT 
+create view stock_moving_average as
+select 
     s."Date", 
     s."Stock", 
     s."Close", 
     s."Volume",
     -- Calculate 5-day moving average using LAG to get the previous 4 closes
     (s."Close" + 
-     LAG(s."Close", 1) OVER (PARTITION BY s."Stock" ORDER BY s."Date") +
-     LAG(s."Close", 2) OVER (PARTITION BY s."Stock" ORDER BY s."Date") +
-     LAG(s."Close", 3) OVER (PARTITION BY s."Stock" ORDER BY s."Date") +
-     LAG(s."Close", 4) OVER (PARTITION BY s."Stock" ORDER BY s."Date")) / 5 AS moving_avg_5day
-FROM 
+     LAG(s."Close", 1) OVER (PARTITION by s."Stock" order by s."Date") +
+     LAG(s."Close", 2) OVER (PARTITION by s."Stock" order by s."Date") +
+     LAG(s."Close", 3) OVER (PARTITION by s."Stock" order by s."Date") +
+     LAG(s."Close", 4) OVER (PARTITION by s."Stock" order by s."Date")) / 5 as moving_avg_5day
+from 
     stocks s;
    
 -- select * from stock_moving_average;
