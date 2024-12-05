@@ -1,0 +1,58 @@
+create extension if not exists postgis;
+--Exercise 2 ----------------------------------------------------------------------------------------------------------------
+SELECT * FROM nycstation;
+SELECT * FROM nycnb;
+
+SELECT *,ST_AsText(geom) FROM nycstation;
+
+--Example 1. Tube stations that are less than 500mt from Grand Central Station exit on Park avenue:
+SELECT name, cross_st
+FROM nycstation
+WHERE ST_Distance( geom, 
+  (select geom from nycstation 
+  where name ='Grand Central' 
+  and cross_st = 'Park Ave')
+  ) <= 500;
+  
+--Example 2. Get name of the street crossing Park Ave S:
+drop view if exists park_cross;
+create view park_cross as
+ select  name, geom, ROW_NUMBER() OVER (ORDER BY name) AS id from nycstreet where 
+		ST_Crosses(geom, (select geom from nycstreet where name like '%Park Ave S%'))
+order by name;
+
+--(a) Find the streets that are inside or crossing the East village
+select * from nycstreet where 
+ST_Crosses(geom, (select geom from nycnb where name like 'East Village')) or
+ST_Contains(geom, (select geom from nycnb where name like 'East Village'))
+order by name;
+
+--(b) Find neighborhood with the most tube stations
+select nb.name,(Select count(*) from nycstation where ST_Contains(nb.geom, geom)) as stations from nycnb nb 
+order by stations desc
+limit 1;
+
+-- (c) Find the longest road
+select name, ST_Length(geom) as road_length
+from nycstreet 
+order by road_length desc 
+limit 1;
+
+--(d) Find the smallest neigborhood
+select name, ST_Area(geom) as area
+from nycnb 
+order by area asc 
+limit 1;
+
+--(e) Find the length of Broadway in Manhattan
+select ns.name as street_name, ST_Length(ns.geom) as broadway_length
+from nycstreet ns
+join nycnb nb on ST_Within(ns.geom, nb.geom)
+where ns.name = 'Broadway' and nb.boroname = 'Manhattan';
+
+--(f) Find any other streets named Broadway in NYC to check if they are longer
+select ns.name as street_name, ST_Length(ns.geom) as road_length
+from nycstreet ns
+join nycnb nb on ST_Within(ns.geom, nb.geom)
+where ns.name = 'Broadway' and nb.boroname != 'Manhattan'
+order by road_length desc;
