@@ -51,8 +51,16 @@ join nycnb nb on ST_Within(ns.geom, nb.geom)
 where ns.name = 'Broadway' and nb.boroname = 'Manhattan';
 
 --(f) Find any other streets named Broadway in NYC to check if they are longer
-select ns.name as street_name, ST_Length(ns.geom) as road_length
+with manhattanbroadwaylength as (
+ select st_length(ns.geom) as broadway_length
+ from nycstreet ns
+ join nycnb nb on st_within(ns.geom, nb.geom)
+ where ns.name = 'broadway' and nb.boroname = 'manhattan'
+)
+select ns.name as street_name, st_length(ns.geom) as road_length
 from nycstreet ns
-join nycnb nb on ST_Within(ns.geom, nb.geom)
-where ns.name = 'Broadway' and nb.boroname != 'Manhattan'
+join nycnb nb on st_within(ns.geom, nb.geom)
+where ns.name = 'broadway'
+ and nb.boroname != 'manhattan'
+ and st_length(ns.geom) > (select broadway_length from manhattanbroadwaylength)
 order by road_length desc;
